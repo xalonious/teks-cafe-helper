@@ -3,7 +3,16 @@ module.exports = (client, interaction) => {
 
     const { customId, member } = interaction;
 
-    const roles = {
+
+    const pingRoles = {
+        "dev": "1227663138254749717",
+        "shift": "1227663175097520148",
+        "training": "1227663210660757504",
+        "announcements": "1227663231787597886",
+        "activity": "1227663262796218368",
+    }
+
+    const colorRoles = {
         "red": "1227412353998524438",
         "orange": "1227412463582973962",
         "yellow": "1227412556428345404",
@@ -14,8 +23,12 @@ module.exports = (client, interaction) => {
     }
 
 
-    if(!Object.keys(roles).includes(customId)) return;
-    if(!interaction.member.roles.cache.get("1223323088226222153")) return interaction.reply({ content: "You must be a server booster to get the color roles!", ephemeral: true });
+    if(!Object.keys(pingRoles).includes(customId) && !Object.keys(colorRoles).includes(customId)) return;
+
+    
+    if(Object.keys(colorRoles).includes(customId) && !interaction.member.roles.cache.get("1223323088226222153")) {
+        return interaction.reply({ content: "You must be a server booster to get the color roles!", ephemeral: true });
+    }
 
     const role = interaction.guild.roles.cache.get(roles[customId]);
 
