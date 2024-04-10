@@ -1,0 +1,30 @@
+const devs = ["531479392128598027"];
+const getLocalCommands = require("../../utils/getLocalCommands");
+
+module.exports = async (client, interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+
+    const localCommands = getLocalCommands();
+    const commandObject = localCommands.find((cmd) => cmd.name === interaction.commandName);
+
+    if (!commandObject) return;
+
+    if (commandObject.devOnly && !devs.includes(interaction.member.id)) {
+        return interaction.reply("Only Xander is able to use this command.");
+    }
+
+    if (commandObject.permissionsRequired?.every((permission) => !interaction.member.permissions.has(permission))) {
+        return interaction.reply("You do not have permission to run that command!");
+    }
+
+
+    try {
+        await commandObject.run(client, interaction);
+    } catch (error) {
+        console.error(error);
+        if(interaction.replied || interaction.deferred) {
+            interaction.followUp(`There was an error while running this command. ${error}`);
+        } else interaction.reply(`There was an error while running this command. ${error}`);
+        
+    }
+};

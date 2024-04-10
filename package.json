@@ -1,0 +1,17 @@
+{
+  "name": "teks_tickets",
+  "version": "1.0.0",
+  "description": "bot for tek tickets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xander",
+  "license": "ISC",
+  "dependencies": {
+    "discord-html-transcripts": "^3.2.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.3.1"
+  }
+}
