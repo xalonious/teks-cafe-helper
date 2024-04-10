@@ -1,6 +1,5 @@
 module.exports = (client, interaction) => {
     if(!interaction.isButton()) return;
-    if(!interaction.member.roles.cache.get("1223323088226222153")) return interaction.reply({ content: "You must be a server booster to get the color roles!", ephemeral: true });
 
     const { customId, member } = interaction;
 
@@ -16,6 +15,7 @@ module.exports = (client, interaction) => {
 
 
     if(!Object.keys(roles).includes(customId)) return;
+    if(!interaction.member.roles.cache.get("1223323088226222153")) return interaction.reply({ content: "You must be a server booster to get the color roles!", ephemeral: true });
 
     const role = interaction.guild.roles.cache.get(roles[customId]);
 
