@@ -30,7 +30,7 @@ module.exports = (client, interaction) => {
         return interaction.reply({ content: "You must be a server booster to get the color roles!", ephemeral: true });
     }
 
-    const role = interaction.guild.roles.cache.get(roles[customId]);
+    const role = interaction.guild.roles.cache.get(pingRoles[customId]) || interaction.guild.roles.cache.get(colorRoles[customId]);
 
     if(member.roles.cache.has(role.id)) {
         member.roles.remove(role);
