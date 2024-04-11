@@ -1,6 +1,7 @@
 const ticketSchema = require("../../schemas/Ticket")
 const { EmbedBuilder } = require("discord.js")
 const { createTranscript } = require("discord-html-transcripts")
+const { PermissionsBitField } = require("discord.js")
 
 module.exports = async (client, interaction) => {
     const { guild, member, customId, channel } = interaction;
@@ -9,7 +10,7 @@ module.exports = async (client, interaction) => {
 
     const permissions = member.roles.cache.get("1227031971016867982")
 
-    if(customId !== "close") return;
+    if(!["close", "claim"].includes(customId)) return;
 
     try {
         const data = await ticketSchema.findOne({ ChannelID: channel.id });
@@ -22,6 +23,25 @@ module.exports = async (client, interaction) => {
         }
 
         if(!permissions) return await interaction.reply({content: "You do not have permission to do that.", ephemeral: true});
+
+        if(customId === "claim") {
+
+            interaction.reply(`Your ticket will be handled by ${interaction.member}`);
+
+            const permissionOverwrites = [
+                { id: "1042849969343844433", deny: [PermissionsBitField.Flags.ViewChannel] },
+                { id: member.id, allow: [PermissionsBitField.Flags.ViewChannel] },
+                { id: data.MemberID, allow: [PermissionsBitField.Flags.ViewChannel] }
+            ];
+
+            await channel.permissionOverwrites.set(permissionOverwrites);
+            const actionRow = interaction.message.components[0];
+            actionRow.components = actionRow.components.filter(component => component.customId !== "claim");
+            await interaction.message.edit({ components: [actionRow] });
+
+        } else if(customId === "close") {
+
+        
 
         await interaction.reply(`Ticket closed by ${interaction.member}`);
 
@@ -63,6 +83,8 @@ module.exports = async (client, interaction) => {
 
         await channel.delete();
         await data.deleteOne();
+
+    }
     } catch (err) {
         if (err.message === "Unknown Member") {
             await interaction.reply("Ticket owner has left the server. Deleting ticket in 5 seconds...");

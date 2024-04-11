@@ -55,6 +55,7 @@ module.exports = async (client, interaction) => {
                 .setFooter({ text: `Ticket ID: ${ticketId}`, iconURL: member.displayAvatarURL({ dynamic: true }) });
 
             const ticketButton = new ActionRowBuilder().setComponents(
+                new ButtonBuilder().setCustomId("claim").setLabel("Claim Ticket").setStyle(ButtonStyle.Danger).setEmoji("🙋🏼‍♂️"),
                 new ButtonBuilder().setCustomId("close").setLabel("Close Ticket").setStyle(ButtonStyle.Primary).setEmoji("🔒"),
             );
 
