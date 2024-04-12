@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = async (client, oldMessage, newMessage) => {
-  if (oldMessage.author.bot || oldMessage.attachments.size > 0 || oldMessage.content.includes("http")) {
+  if (oldMessage.author.bot || oldMessage.attachments.size > 0 || oldMessage.content.includes("http") || oldMessage || oldMessage.content === newMessage.content) {
     return;
   }
 
