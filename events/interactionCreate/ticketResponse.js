@@ -41,6 +41,7 @@ module.exports = async (client, interaction) => {
                await ticketSchema.create({
                 MemberID: member.id,
                 TicketID: ticketId,
+                ChannelID: channel.id,
                 Type: value,
             });
 
