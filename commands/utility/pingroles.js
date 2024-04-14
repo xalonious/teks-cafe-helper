@@ -18,7 +18,7 @@ module.exports = {
 
         const rrButtons2 = new ActionRowBuilder().setComponents(
             new ButtonBuilder().setCustomId("activity").setLabel("Activity ping").setStyle(ButtonStyle.Primary).setEmoji("🏃🏼‍♂️"),
-            new ButtonBuilder().setCustomId("alliance").setLabel("Alliance ping").setStyle(ButtonStyle.Primary).setEmoji("🏃🏼‍♂️"),
+            new ButtonBuilder().setCustomId("alliance").setLabel("Alliance ping").setStyle(ButtonStyle.Primary).setEmoji("🤝"),
         )
 
         const rrChannel = interaction.guild.channels.cache.get("1227664831121854534")
