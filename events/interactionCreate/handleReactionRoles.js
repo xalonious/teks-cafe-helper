@@ -10,6 +10,7 @@ module.exports = (client, interaction) => {
         "training": "1227663210660757504",
         "announcements": "1227663231787597886",
         "activity": "1227663262796218368",
+        "aliance": "1229206403919642685"
     }
 
     const colorRoles = {
