@@ -16,7 +16,7 @@ module.exports = async (client, interaction) => {
 
     const ticketId = Math.floor(Math.random() * 1000000);
 
-    if (!["ingame", "hr", "discord"].includes(value)) return;
+    if (!["ingame", "hr", "pr", "discord"].includes(value)) return;
 
     await interaction.editReply({ content: "Creating ticket...", ephemeral: true });
 
@@ -25,10 +25,17 @@ module.exports = async (client, interaction) => {
         { id: member.id, allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.EmbedLinks] },
     ];
 
-    if (value === "ingame") {
-        permissionOverwrites.push({ id: "1227031971016867982", allow: [PermissionsBitField.Flags.ViewChannel] });
-    } else if (value === "hr" || value === "discord") {
-        permissionOverwrites.push({ id: "1227285303316713643", allow: [PermissionsBitField.Flags.ViewChannel] });
+    switch (value) {
+        case "ingame":
+            permissionOverwrites.push({ id: "1227031971016867982", allow: [PermissionsBitField.Flags.ViewChannel] });
+            break;
+        case "hr":
+        case "discord":
+            permissionOverwrites.push({ id: "1227285303316713643", allow: [PermissionsBitField.Flags.ViewChannel] });
+            break;
+        case "pr":
+            permissionOverwrites.push({ id: "1227731241214808134", allow: [PermissionsBitField.Flags.ViewChannel] });
+            break;
     }
 
     await guild.channels.create({
@@ -38,7 +45,7 @@ module.exports = async (client, interaction) => {
         permissionOverwrites,
     })
         .then(async (channel) => {
-               await ticketSchema.create({
+            await ticketSchema.create({
                 MemberID: member.id,
                 TicketID: ticketId,
                 ChannelID: channel.id,
@@ -46,6 +53,20 @@ module.exports = async (client, interaction) => {
             });
 
             await interaction.editReply(`Ticket created successfully! [Click here to access the ticket channel](https://discord.com/channels/${guild.id}/${channel.id})`);
+
+            let pingedRole;
+            switch (value) {
+                case "ingame":
+                    pingedRole = "1227031971016867982"; 
+                    break;
+                case "hr":
+                case "discord":
+                    pingedRole = "1227285303316713643"; 
+                    break;
+                case "pr":
+                    pingedRole = "1227731241214808134"; 
+                    break;
+            }
 
             const ticketEmbed = new EmbedBuilder()
                 .setTitle(`Ticket Opened | type: ${value.toUpperCase()}`)
@@ -58,10 +79,15 @@ module.exports = async (client, interaction) => {
                 new ButtonBuilder().setCustomId("close").setLabel("Close Ticket").setStyle(ButtonStyle.Primary).setEmoji("🔒"),
             );
 
-            channel.send({
-                content: "<@&1227031971016867982>",
+            const messageOptions = {
                 embeds: [ticketEmbed],
                 components: [ticketButton],
-            });
+            };
+
+            if (pingedRole) {
+                messageOptions.content = `<@&${pingedRole}>`;
+            }
+
+            channel.send(messageOptions);
         });
 };

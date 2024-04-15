@@ -27,6 +27,11 @@ module.exports = {
                     .setDescription("For HR support please open this ticket.")
                     .setEmoji("📩"),
                 new StringSelectMenuOptionBuilder()
+                    .setLabel("PR support")
+                    .setValue("hr")
+                    .setDescription("For PR support please open this ticket.")
+                    .setEmoji("📩"),
+                new StringSelectMenuOptionBuilder()
                     .setLabel("Discord support")
                     .setValue("discord")
                     .setDescription("For discord support please open this ticket.")
