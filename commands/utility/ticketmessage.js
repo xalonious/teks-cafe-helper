@@ -28,7 +28,7 @@ module.exports = {
                     .setEmoji("📩"),
                 new StringSelectMenuOptionBuilder()
                     .setLabel("PR support")
-                    .setValue("hr")
+                    .setValue("pr")
                     .setDescription("For PR support please open this ticket.")
                     .setEmoji("📩"),
                 new StringSelectMenuOptionBuilder()
