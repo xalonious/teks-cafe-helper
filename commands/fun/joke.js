@@ -10,6 +10,8 @@ module.exports = {
 
             await interaction.deferReply();
 
+            if(interaction.channel.id !== "1230560084552323093") return interaction.editReply("this command.... no... longer.... exists.....");
+
             const response = await axios.get('https://v2.jokeapi.dev/joke/Any');
             const joke = response.data;
             
