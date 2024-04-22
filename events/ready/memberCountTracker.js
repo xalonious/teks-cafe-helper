@@ -13,13 +13,13 @@ module.exports = async(client) => {
         .setTitle("New member joined")
         .setColor("Aqua")
         .setThumbnail(
-            "https://cdn.discordapp.com/attachments/1076652520149110894/1086038285501083771/krestia_cafe.png"
+            "https://cdn.discordapp.com/attachments/717071622334578751/1227407139799306282/image.png?ex=6631857a&is=661f107a&hm=c22120ae327cab3f78cb529f2284a88ddc7d537b396d1dfc76ead1022b9e0a94&"
         )
     const memberLeftEmbed = new EmbedBuilder()
         .setTitle("Member left")
         .setColor("Red")
         .setThumbnail(
-            "https://cdn.discordapp.com/attachments/1076652520149110894/1086038285501083771/krestia_cafe.png"
+            "https://cdn.discordapp.com/attachments/717071622334578751/1227407139799306282/image.png?ex=6631857a&is=661f107a&hm=c22120ae327cab3f78cb529f2284a88ddc7d537b396d1dfc76ead1022b9e0a94&"
         )
 
     async function updateMemberCount() {
