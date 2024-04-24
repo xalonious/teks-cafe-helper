@@ -7,7 +7,6 @@ module.exports = (client, interaction) => {
     const pingRoles = {
         "dev": "1227663138254749717",
         "shift": "1227663175097520148",
-        "training": "1227663210660757504",
         "announcements": "1227663231787597886",
         "activity": "1227663262796218368",
         "alliance": "1229206403919642685",
