@@ -13,6 +13,7 @@ module.exports = {
             new ButtonBuilder().setCustomId("dev").setLabel("Dev ping").setStyle(ButtonStyle.Primary).setEmoji("🛠️"),
             new ButtonBuilder().setCustomId("shift").setLabel("Shift ping").setStyle(ButtonStyle.Primary).setEmoji("📲"),
             new ButtonBuilder().setCustomId("announcements").setLabel("Announcements ping").setStyle(ButtonStyle.Primary).setEmoji("📢"),
+            new ButtonBuilder().setCustomId("events").setLabel("Events ping").setStyle(ButtonStyle.Primary).setEmoji("‼️"),
         )
 
         const rrButtons2 = new ActionRowBuilder().setComponents(
