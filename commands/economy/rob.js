@@ -5,7 +5,7 @@ module.exports = {
     name: "rob",
     description: "Try to rob someone for some coins",
     requiresAccount: true,
-    cooldown: 300000,
+    cooldown: 120000,
     options: [
         {
             name: "user",
@@ -41,7 +41,7 @@ module.exports = {
             await interaction.editReply(`You stole **__${robAmount}__** coins from ${user.username}... hey wtf thats illegal!`);
 
         } else {
-            const lossAmount = Math.floor(existingUser.balance * (Math.random() * 0.125));
+            const lossAmount = Math.floor(existingUser.balance * (Math.random() * 0.15));
 
             await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { balance: -lossAmount } });
             await userAccount.findOneAndUpdate({ userId: user.id }, { $inc: { balance: lossAmount } });

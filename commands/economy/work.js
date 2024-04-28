@@ -4,7 +4,7 @@ module.exports = {
     name: "work",
     description: "Work to earn some money",
     requiresAccount: true,
-    cooldown: 150000,
+    cooldown: 120000,
 
     run: async(client, interaction) => {
 
