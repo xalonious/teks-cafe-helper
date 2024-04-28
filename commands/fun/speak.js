@@ -4,7 +4,7 @@ module.exports = {
 	permissionsRequired: [PermissionsBitField.Flags.ManageMessages],
 	options: [
 		{
-		name: "text",
+			name: "text",
 			description: "what to say",
 			type: ApplicationCommandOptionType.String,
 			required: true
