@@ -2,7 +2,7 @@ const userAccount = require("../../schemas/userAccount");
 const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-    name: "leaderboard",
+    name: "lb",
     description: "Displays the economy leaderboard",
 
     run: async(client, interaction) => {
