@@ -30,6 +30,8 @@ module.exports = {
 
         if(existingUser.balance < 250) return interaction.editReply("hey... you need at least 250 coins to rob someone...");
 
+        if(targetUser.balance < 500) return interaction.editReply("The victim doesn't have at least 500 coins... not worth it man")
+
         const result = Math.random() < 0.3 ? "success" : "failure";
 
         if(result == "success") {
