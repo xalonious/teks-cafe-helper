@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js");
+const { PermissionsBitField, ApplicationCommandOptionType } = require("discord.js");
 module.exports = {
 	name: "speak",
 	description: "Says anything as the bot",
