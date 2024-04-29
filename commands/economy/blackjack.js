@@ -175,11 +175,11 @@ async function updateScore(interaction, embed, playerHand, dealerHand) {
 
 	await interaction.editReply({ embeds: [embed.setFields({
 		name: "Player",
-		value: playerCards.join("\n"),
+		value: playerCards.join(" "),
 		inline: true
 	}, {
 		name: "Dealer",
-		value: dealerCards.join("\n"),
+		value: dealerCards.join(" "),
 		inline: true
 	})] });
 }
