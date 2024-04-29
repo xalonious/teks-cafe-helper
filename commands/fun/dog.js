@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { EmbedBuilder } = require("discord.js");
 module.exports = {
-    name: "cat",
+    name: "dog",
     description: "we love dogs",
 
     run: async(client, interaction) => {

@@ -30,7 +30,7 @@ module.exports = {
 
 		amount = parseInt(amount);
 
-		if (amount < 1) return interaction.editReply("hey... you can't bet less than 1 coin");
+		if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");
 
 		if (existingUser.balance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
 
@@ -56,9 +56,15 @@ module.exports = {
 			.setFields({
 				name: "Player",
 				value: "0",
+				inline: false
 			}, {
 				name: "Dealer",
 				value: "0",
+				inline: true
+			}, {
+				name: "Current Value",
+				value: "0",
+				inline: false
 			})
 
 		await interaction.editReply({ embeds: [bjEmbed] });
@@ -78,7 +84,7 @@ module.exports = {
 				}
 			});
 			updateScore(interaction, bjEmbed, playerHand, dealerHand);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`YOU WON!. you lost ${amount} coins`)]});
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(` <a:tekcoin:1234188584664436778> YOU WON!. you won ${amount} coins`)]});
 		}
 		if (winnings < 0) {
 			await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
@@ -87,11 +93,11 @@ module.exports = {
 				}
 			});
 			updateScore(interaction, bjEmbed, playerHand, dealerHand);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`bust. you lost ${amount} coins`)]});
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`<a:tekcoin:1234188584664436778> busted. you lost ${amount} coins`)]});
 		}
 		if (winnings === 0) {
 			updateScore(interaction, bjEmbed, playerHand, dealerHand);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`it was A TIE. no money lost.`)]});	
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`<a:tekcoin:1234188584664436778> it was A TIE. no money lost.`)]});	
 		}
 
 	}
@@ -119,7 +125,7 @@ async function runRound(playerHand, dealerHand, interaction,bjEmbed) {
 		ephemeral: true,
 	});
 
-	const cfilter = i => i.customId === "hit" || i.customId === "stand" && i.user.id === interaction.user.id;
+	const cfilter = i => (i.customId === "hit" || i.customId === "stand") && i.user.id === interaction.user.id;
 	
 	try {
 		const confirmation = await response.awaitMessageComponent({
@@ -176,11 +182,15 @@ async function updateScore(interaction, embed, playerHand, dealerHand) {
 	await interaction.editReply({ embeds: [embed.setFields({
 		name: "Player",
 		value: playerCards.join(" "),
-		inline: true
+		inline: false
 	}, {
 		name: "Dealer",
 		value: dealerCards.join(" "),
 		inline: true
+	}, {
+		name: "Current Value",
+		value: calculateHandScore(playerHand).toString(),
+		inline: false
 	})] });
 }
 
@@ -218,15 +228,13 @@ function calculateHandScore(hand) {
 
 // Helper function to calculate the winnings based on the game outcome
 function calculateWinnings(playerScore, dealerScore, betAmount) {
-	if (playerScore > 21) {
+	if (playerScore > 21 && dealerScore > 21) {
 		return -betAmount;
-	} else if (dealerScore > 21) {
-		return betAmount;
-	} else if (playerScore > dealerScore) {
-		return betAmount;
-	} else if (playerScore < dealerScore) {
-		return -betAmount;
-	} else {
+	} else if (playerScore === dealerScore) {
 		return 0;
+	} else if (playerScore > dealerScore) {
+		return betAmount * 2;
+	} else {
+		return -betAmount;
 	}
 }
