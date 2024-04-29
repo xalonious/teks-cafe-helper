@@ -29,7 +29,7 @@ module.exports = {
         .setTitle(`${user.username}'s balance`)
         .setDescription(`<a:tekcoin:1234188584664436778> | Balance: ${existingUser.balance}`)
         .setColor("Random")
-        .setThumbnail("https://media1.tenor.com/m/cAbmue3GsqwAAAAd/horse-sweeping.gif", { dynamic: true })
+        .setThumbnail(user.displayAvatarURL(), { dynamic: true })
         .setFooter({ text: "you poor lmao"})
 
         
