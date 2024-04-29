@@ -30,7 +30,7 @@ module.exports = {
 
 		if (amount < 1) return interaction.editReply("hey... you can't bet less than 1 coin");
 
-		//if (existingUser.balance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+		if (existingUser.balance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
 
 		// Start the game of blackjack
 		// Your blackjack game logic goes here
