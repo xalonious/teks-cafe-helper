@@ -24,6 +24,8 @@ module.exports = {
 
                 if(isNaN(amount) && amount !== "all") return interaction.editReply("hey... that's not a number... you can't bet that...");
                 if(amount == "all") amount = existingUser.balance;
+
+                amount = parseInt(amount);
     
                 if(amount < 1) return interaction.editReply("hey... you can't bet less than 1 coin");
         

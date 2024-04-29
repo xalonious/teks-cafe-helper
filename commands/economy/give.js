@@ -29,6 +29,8 @@ module.exports = {
 
             if(user.id == interaction.user.id) return interaction.editReply("hey... you can't give yourself money... that's not how it works");
     
+    
+
             if(amount < 1) return interaction.editReply("hey... you can't give less than 1 coin");
     
             const existingUser = await userAccount.findOne({ userId: interaction.user.id });

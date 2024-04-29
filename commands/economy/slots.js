@@ -32,6 +32,8 @@ module.exports = {
 
         if (amount == "all") amount = existingUser.balance;
 
+        amount = parseInt(amount);
+
         let win = false;
 
         if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");

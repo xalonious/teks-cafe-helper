@@ -7,7 +7,7 @@ const {
 } = require("discord.js");
 
 module.exports = {
-	name: "blackjack",
+	name: "bj",
 	description: "Play a game of blackjack to win some coins",
 	requiresAccount: true,
 	options: [{
@@ -27,6 +27,8 @@ module.exports = {
 
 		if (isNaN(amount) && amount !== "all") return interaction.editReply("hey... that's not a number... you can't bet that...");
 		if (amount == "all") amount = existingUser.balance;
+
+		amount = parseInt(amount);
 
 		if (amount < 1) return interaction.editReply("hey... you can't bet less than 1 coin");
 
@@ -54,11 +56,9 @@ module.exports = {
 			.setFields({
 				name: "Player",
 				value: "0",
-				inline: true
 			}, {
 				name: "Dealer",
 				value: "0",
-				inline: true
 			})
 
 		await interaction.editReply({ embeds: [bjEmbed] });
@@ -119,7 +119,7 @@ async function runRound(playerHand, dealerHand, interaction,bjEmbed) {
 		ephemeral: true,
 	});
 
-	const cfilter = i => i.customId === "hit" || i.customId === "stand";
+	const cfilter = i => i.customId === "hit" || i.customId === "stand" && i.user.id === interaction.user.id;
 	
 	try {
 		const confirmation = await response.awaitMessageComponent({
