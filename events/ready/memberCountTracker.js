@@ -32,7 +32,7 @@ module.exports = async(client) => {
 
         if (currentCount !== lastMemberCount) {
             if(currentCount == undefined) return;
-            const currentTarget = jsonData.goal
+            const currentTarget = parseInt(jsonData.goal);
             const amountLeft = currentTarget - currentCount
 
             if(amountLeft == 0) {
