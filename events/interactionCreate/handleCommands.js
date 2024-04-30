@@ -7,6 +7,9 @@ const cooldowns = new Map();
 module.exports = async (client, interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
+    const testmode = false;
+    if(testmode && interaction.user.id !== "531479392128598027") return interaction.reply("The bot is currently in test mode, pls try again later")
+
     const localCommands = getLocalCommands();
     const commandObject = localCommands.find((cmd) => cmd.name === interaction.commandName);
 
@@ -71,20 +74,20 @@ module.exports = async (client, interaction) => {
         if (wasSuccesful) {
             cooldowns.set(cooldownKey, now + cooldown);
 
-            if(commandObject.givesxp) {
-            const user = await userAccount.findOne({ userId: interaction.user.id });
+            if (commandObject.givesxp) {
+                const user = await userAccount.findOne({ userId: interaction.user.id });
 
-            user.levels.xp += 5;
+                user.levels.xp += 5;
 
-            if(user.levels.xp >= user.levels.xpneeded) {
-                const newLevel = user.levels.level++;
-                user.levels.xp = 0;
-                parseInt(user.levels.xpneeded *= 1.1);
-                parseInt(user.bankcapacity *= 1.4);
-                await interaction.followUp(`Congrats ${interaction.member} You leveled up to level ${newLevel}! Your bankspace has been increased by 40%!`);
-            }
+                if (user.levels.xp >= user.levels.xpneeded) {
+                    user.levels.level += 1;
+                    user.levels.xp = 0;
+                    user.levels.xpneeded = parseInt(user.levels.xpneeded * 1.1);
+                    user.bankcapacity = parseInt(user.bankcapacity * 1.4);
+                    await interaction.followUp(`Congrats ${interaction.member}! You leveled up to level ${parseInt(user.levels.level)}! Your bankspace has been increased by 40%!`);
+                }
 
-            await user.save();
+                await user.save();
             }
 
             

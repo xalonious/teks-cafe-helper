@@ -20,6 +20,8 @@ module.exports = {
             
                     let amount = interaction.options.getString("amount");
 
+                    const existingUser = await userAccount.findOne({ userId: interaction.user.id });
+                    
                     if(isNaN(amount) && amount !== "all") {
                         return interaction.editReply("hey... that's not a number... you can't withdraw that...");
                     }
@@ -29,7 +31,6 @@ module.exports = {
         
                     if(amount < 1) return interaction.editReply("hey... you can't withdraw less than 1 coin");
             
-                    const existingUser = await userAccount.findOne({ userId: interaction.user.id });
             
                     if(existingUser.bankbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.bankbalance + " coins in your bank... you can't withdraw more than you have...");
         
