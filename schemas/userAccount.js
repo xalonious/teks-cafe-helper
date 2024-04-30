@@ -8,8 +8,12 @@ const userSchema = new mongoose.Schema({
     },
     balance: {
         type: Number,
-        default: 0
-    }
+        default: 0,
+    },
+    hasClaimedDaily: {
+        type: Boolean,
+        default: false
+    },
 })
 
 module.exports = mongoose.model('userAccount', userSchema);
