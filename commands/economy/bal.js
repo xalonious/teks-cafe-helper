@@ -26,7 +26,7 @@ module.exports = {
 
         const balEmbed = new EmbedBuilder()
         .setTitle(`${user.username}'s balance`)
-        .setDescription(`<a:tekcoin:1234188584664436778> | Wallet Balance: ${existingUser.walletbalance} \n <a:tekcoin:1234188584664436778> | Bank Balance: ${existingUser.bankbalance}/${existingUser.bankcapacity}`)
+        .setDescription(`<a:tekcoin:1234188584664436778> | Total Balance: ${existingUser.walletbalance + existingUser.bankbalance} \n <:wallet:1234992701603315762> | Wallet Balance: ${existingUser.walletbalance} \n :bank: | Bank Balance: ${existingUser.bankbalance}/${existingUser.bankcapacity}`)
         .setColor("Random")
         .setThumbnail(user.displayAvatarURL(), { dynamic: true })
         .setFooter({ text: "you poor lmao"})
