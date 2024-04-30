@@ -12,6 +12,7 @@ module.exports = {
     description: "Play the slot machine",
     cooldown: 30000,
     requiresAccount: true,
+    givesxp: true,
     options: [
         {
             name: "amount",

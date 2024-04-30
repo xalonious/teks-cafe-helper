@@ -18,7 +18,7 @@ module.exports = {
             
                     await interaction.deferReply();
             
-                    const amount = interaction.options.getString("amount");
+                    let amount = interaction.options.getString("amount");
 
                     if(isNaN(amount) && amount !== "all") {
                         return interaction.editReply("hey... that's not a number... you can't withdraw that...");

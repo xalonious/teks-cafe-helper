@@ -4,6 +4,7 @@ module.exports = {
 	name: "bj",
 	description: "Play a game of blackjack to win some coins",
 	requiresAccount: true,
+	givesxp: true,
 	cooldown: 30000,
 	options: [{
 		name: "amount",

@@ -5,6 +5,7 @@ module.exports = {
     name: "coinflip",
     description: "Flip a coin to double your money",
     requiresAccount: true,
+    givesxp: true,
     options: [
         {
             name: "amount",

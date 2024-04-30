@@ -4,6 +4,7 @@ module.exports = {
     name: "crime",
     description: "Commit a crime to get some money",
     requiresAccount: true,
+    givesxp: true,
     cooldown: 120000,
 
         run: async(client, interaction) => {

@@ -6,6 +6,7 @@ module.exports = {
     description: "Try to rob someone for some coins",
     requiresAccount: true,
     cooldown: 120000,
+    givesxp: true,
     options: [
         {
             name: "user",
