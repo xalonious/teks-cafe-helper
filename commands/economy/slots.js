@@ -88,12 +88,13 @@ module.exports = {
         }
 
         if (win) {
-            slotsEmbed.setDescription(`${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n<a:tekcoin:1234188584664436778> **You won ${amount - bet} coins!**`);
+            const winnings = amount - bet;
+            slotsEmbed.setDescription(`${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n<a:tekcoin:1234188584664436778> **You won ${winnings} coins!**`);
             slotsEmbed.setColor("Green");
             await spinningMessage.edit({ embeds: [slotsEmbed] });
             await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                 $inc: {
-                    walletbalance: amount
+                    walletbalance: winnings
                 }
             });
         } else {
