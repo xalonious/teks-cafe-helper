@@ -31,7 +31,7 @@ module.exports = {
         
                 
         
-                if(existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+                if(existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
         
                 const result = Math.floor(Math.random() * 2) == 0 ? "heads" : "tails";
         

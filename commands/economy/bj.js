@@ -24,7 +24,7 @@ module.exports = {
 
 		if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");
 
-		if (existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+		if (existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
 
 		const playerHand = [];
 		const dealerHand = [];
@@ -55,16 +55,16 @@ module.exports = {
 		if (winnings > 0) {
 			await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: amount } });
 			updateScore(interaction, bjEmbed, playerHand, dealerHand, false);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`YOU WON!. you got ${amount} coins`)] });
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`<a:tekcoin:1234188584664436778> YOU WON! you got ${amount} coins`)] });
 		}
 		if (winnings < 0) {
 			await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: -amount } });
 			updateScore(interaction, bjEmbed, playerHand, dealerHand, false);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`youch. you lost ${amount} coins`)] });
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`you suck at this, you lost ${amount} coins`)] });
 		}
 		if (winnings === 0) {
 			updateScore(interaction, bjEmbed, playerHand, dealerHand, false);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`it was A TIE. no money lost.`)] });
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`it was a tie. no money lost.`)] });
 		}
 	}
 }
@@ -130,7 +130,6 @@ async function runRound(playerHand, dealerHand, interaction, bjEmbed) {
 
 async function updateScore(interaction, embed, playerHand, dealerHand, hide) {
 	let cardemojis = ["♠️", "♣️", "♥️", "♦️"];
-	console.log(hide);
 	let playerCards = playerHand.map(card => card + " " + cardemojis[card.charCodeAt(0) % 4]);
 	let dealerCards = dealerHand.map((card, index) => hide && index === dealerHand.length - 1 ? "?" : card + " " + cardemojis[card.charCodeAt(0) % 4]);
 

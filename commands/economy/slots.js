@@ -39,7 +39,7 @@ module.exports = {
 
         if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");
 
-        if (amount > existingUser.walletbalance) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+        if (amount > existingUser.walletbalance) return interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
 
         let number = [];
         const spinningIterations = 4; 

@@ -38,7 +38,7 @@ module.exports = {
     
             if(!targetUser) return interaction.editReply("hey... they don't have an account yet... tell them to create one using `/createaccount`");
     
-            if(existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't give more than you have... smh");
+            if(existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't give more than you have... smh");
     
             await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                 $inc: {
