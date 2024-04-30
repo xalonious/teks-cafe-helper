@@ -30,7 +30,7 @@ module.exports = {
 
 		if (amount < 1) return interaction.editReply("hey... you can't bet less than 1 coin");
 
-		if (existingUser.balance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+		// if (existingUser.balance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
 
 		// Start the game of blackjack
 		// Your blackjack game logic goes here
@@ -51,20 +51,14 @@ module.exports = {
 			.setColor("#FFFFFF")
 			.setThumbnail("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.sevenjackpots.com%2Fwp-content%2Fuploads%2F2021%2F04%2Fblackjack-dealers-up-card-strategy.jpg&f=1&nofb=1&ipt=ea5faa0167d1a998c1cf4b1d32efefa8e6bdbcfc5a2d843bddf3a2d1c93df5e0&ipo=images")
 			.setDescription(`i love blackjack! you have bet ${amount} coins`)
-			.setFields({
-				name: "Player",
-				value: "0",
-				inline: true
-			}, {
-				name: "Dealer",
-				value: "0",
-				inline: true
-			})
+			
 
 		await interaction.editReply({ embeds: [bjEmbed] });
 		updateScore(interaction, bjEmbed,playerHand,dealerHand);
 
-		while (await runRound(playerHand, dealerHand, interaction ,bjEmbed)) {}
+		while (await runRound(playerHand, dealerHand, interaction ,bjEmbed)) {
+			updateScore(interaction, bjEmbed, playerHand, dealerHand);
+		}
 
 		const playerScore = calculateHandScore(playerHand);
 		const dealerScore = calculateHandScore(dealerHand);
@@ -77,8 +71,8 @@ module.exports = {
 					balance: amount
 				}
 			});
-			updateScore(interaction, bjEmbed, playerHand, dealerHand);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`YOU WON!. you lost ${amount} coins`)]});
+			updateScore(interaction, bjEmbed, playerHand, dealerHand,false);
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`YOU WON!. you got ${amount} coins`)]});
 		}
 		if (winnings < 0) {
 			await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
@@ -86,11 +80,11 @@ module.exports = {
 					balance: -amount
 				}
 			});
-			updateScore(interaction, bjEmbed, playerHand, dealerHand);
-			await interaction.editReply({ embeds: [bjEmbed.setDescription(`bust. you lost ${amount} coins`)]});
+			updateScore(interaction, bjEmbed, playerHand, dealerHand,false);
+			await interaction.editReply({ embeds: [bjEmbed.setDescription(`youch. you lost ${amount} coins`)]});
 		}
 		if (winnings === 0) {
-			updateScore(interaction, bjEmbed, playerHand, dealerHand);
+			updateScore(interaction, bjEmbed, playerHand, dealerHand,false);
 			await interaction.editReply({ embeds: [bjEmbed.setDescription(`it was A TIE. no money lost.`)]});	
 		}
 
@@ -98,7 +92,7 @@ module.exports = {
 }
 
 async function runRound(playerHand, dealerHand, interaction,bjEmbed) {
-	updateScore(interaction, bjEmbed, playerHand, dealerHand);
+	updateScore(interaction, bjEmbed, playerHand, dealerHand,true);
 
 	const hit = new ButtonBuilder()
 		.setLabel("Hit")
@@ -118,12 +112,10 @@ async function runRound(playerHand, dealerHand, interaction,bjEmbed) {
 		components: [row],
 		ephemeral: true,
 	});
-
-	const cfilter = i => i.customId === "hit" || i.customId === "stand";
 	
 	try {
 		const confirmation = await response.awaitMessageComponent({
-			filter: cfilter,
+			filter: (i) => i.user.id === interaction.user.id,
 			time: 60_000
 		});
 
@@ -148,7 +140,7 @@ async function runRound(playerHand, dealerHand, interaction,bjEmbed) {
 		} else if (confirmation.customId === 'stand') {
 			// Player chooses to stand
 			// Dealer's turn
-			while (calculateHandScore(dealerHand) < calculateHandScore(playerHand)) {
+			while (calculateHandScore(dealerHand) < 17) {
 				dealerHand.push(dealCard());
 			}
 			await confirmation.update({
@@ -167,20 +159,25 @@ async function runRound(playerHand, dealerHand, interaction,bjEmbed) {
 		return false; // End the game if the user doesn't respond
 	}
 }
-
-async function updateScore(interaction, embed, playerHand, dealerHand) {
+let symbolIndex = {};
+async function updateScore(interaction, embed, playerHand, dealerHand,hide) {
 	let cardemojis = ["♠️","♣️","♥️","♦️"];
-	let playerCards = playerHand.map(card => card + " " + cardemojis[Math.floor(Math.random() * cardemojis.length)]);
-	let dealerCards = dealerHand.map(card => card + " " + cardemojis[Math.floor(Math.random() * cardemojis.length)]);
+	console.log(hide);
+	let playerCards = playerHand.map(card => card + " " + cardemojis[card.charCodeAt(0) % 4]);
+	let dealerCards = dealerHand.map((card, index) => hide && index === dealerHand.length - 1 ? "?" : card + " " + cardemojis[card.charCodeAt(0) % 4]);
 
 	await interaction.editReply({ embeds: [embed.setFields({
 		name: "Player",
 		value: playerCards.join(" "),
-		inline: true
+		inline: false
 	}, {
 		name: "Dealer",
 		value: dealerCards.join(" "),
-		inline: true
+		inline: false
+	}, {
+		name: "Your Score",
+		value: calculateHandScore(playerHand).toString(),
+		inline: false
 	})] });
 }
 
@@ -199,8 +196,12 @@ function calculateHandScore(hand) {
 
 	for (const card of hand) {
 		if (card === "A") {
-			score += 11;
-			numAces++;
+			if (score + 11 > 21) {
+				score += 1;
+			} else {
+				score += 11;
+				numAces++;
+			}
 		} else if (card === "K" || card === "Q" || card === "J") {
 			score += 10;
 		} else {
