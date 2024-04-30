@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    bankStorage: {
+    bankcapacity: {
         type: Number,
         default: 1000,
     },
