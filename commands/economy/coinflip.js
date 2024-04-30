@@ -23,7 +23,7 @@ module.exports = {
                 const existingUser = await userAccount.findOne({ userId: interaction.user.id });
 
                 if(isNaN(amount) && amount !== "all") return interaction.editReply("hey... that's not a number... you can't bet that...");
-                if(amount == "all") amount = existingUser.balance;
+                if(amount == "all") amount = existingUser.walletbalance;
 
                 amount = parseInt(amount);
     
@@ -31,14 +31,14 @@ module.exports = {
         
                 
         
-                if(existingUser.balance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+                if(existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
         
                 const result = Math.floor(Math.random() * 2) == 0 ? "heads" : "tails";
         
                 if(result == "heads") {
                     await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                         $inc: {
-                            balance: amount
+                            walletbalance: amount
                         }
                     });
         
@@ -46,7 +46,7 @@ module.exports = {
                 } else {
                     await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                         $inc: {
-                            balance: -amount
+                            walletbalance: -amount
                         }
                     });
         

@@ -24,10 +24,10 @@ module.exports = {
 
         if(!existingUser) return interaction.editReply("hey... they don't have an account yet... tell them to create one using `/createaccount`");
 
-
         const balEmbed = new EmbedBuilder()
         .setTitle(`${user.username}'s balance`)
-        .setDescription(`<a:tekcoin:1234188584664436778> | Balance: ${existingUser.balance}`)
+        .setDescription(`<a:tekcoin:1234188584664436778> | Balance: ${existingUser.balance} \n <a:tekcoin:1234188584664436778> | Bank Balance: ${existingUser.bankbalance}/${existingUser.bankCapacity}`)
+        .addField("<a:tekcoin:1234188584664436778> | Bank Balance", `${existingUser.amountInBank}/${existingUser.bankCapacity}`)
         .setColor("Random")
         .setThumbnail(user.displayAvatarURL(), { dynamic: true })
         .setFooter({ text: "you poor lmao"})

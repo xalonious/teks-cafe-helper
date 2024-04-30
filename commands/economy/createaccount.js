@@ -12,7 +12,12 @@ module.exports = {
         if(existingUser) return interaction.editReply("hey... you already have an account. stop trying to fool me.");
 
             const newAccount = new userAccount({
-            userId: interaction.user.id
+            userId: interaction.user.id,
+            levels: {
+                level: 1,
+                xp: 0,
+                xpneeded: 100
+            }
         });
 
         await newAccount.save();

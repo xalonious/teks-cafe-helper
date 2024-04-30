@@ -79,7 +79,7 @@ module.exports = {
                 
                 
 
-                await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { balance: amount } });
+                await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: amount } });
 
                 const randomIndex = Math.floor(Math.random() * successfulCrimes.length);
                 await interaction.editReply(successfulCrimes[randomIndex]);
@@ -146,7 +146,7 @@ module.exports = {
                 await interaction.editReply(failedCrimes[randomIndex]);
 
 
-                await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { balance: -amount } });
+                await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: -amount } });
 
             }
         }

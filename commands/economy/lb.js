@@ -9,7 +9,7 @@ module.exports = {
             
             await interaction.deferReply();
     
-            const allUsers = await userAccount.find({}).sort({ balance: -1 }).limit(10);
+            const allUsers = await userAccount.find({}).sort({ walletbalance: -1 }).limit(10);
     
             const leaderboardEmbed = new EmbedBuilder()
             .setTitle("Economy Leaderboard Top 10")

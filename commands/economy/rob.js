@@ -28,25 +28,25 @@ module.exports = {
 
         if(!targetUser) return interaction.editReply("hey... they don't have an account yet... tell them to create one using `/createaccount`");
 
-        if(existingUser.balance < 250) return interaction.editReply("hey... you need at least 250 coins to rob someone...");
+        if(existingUser.walletbalance < 250) return interaction.editReply("hey... you need at least 250 coins to rob someone...");
 
-        if(targetUser.balance < 500) return interaction.editReply("The victim doesn't have at least 500 coins... not worth it man")
+        if(targetUser.walletbalance < 500) return interaction.editReply("The victim doesn't have at least 500 coins... not worth it man")
 
         const result = Math.random() < 0.3 ? "success" : "failure";
 
         if(result == "success") {
-            const robAmount = Math.floor(Math.random() * targetUser.balance) + 1;
+            const robAmount = Math.floor(Math.random() * targetUser.walletbalance) + 1;
 
-            await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { balance: robAmount } });
-            await userAccount.findOneAndUpdate({ userId: user.id }, { $inc: { balance: -robAmount } });
+            await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: robAmount } });
+            await userAccount.findOneAndUpdate({ userId: user.id }, { $inc: { walletbalance: -robAmount } });
 
             await interaction.editReply(`You stole **__${robAmount}__** coins from ${user.username}... hey wtf thats illegal!`);
 
         } else {
-            const lossAmount = Math.floor(existingUser.balance * (Math.random() * 0.15));
+            const lossAmount = Math.floor(existingUser.walletbalance * (Math.random() * 0.15));
 
-            await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { balance: -lossAmount } });
-            await userAccount.findOneAndUpdate({ userId: user.id }, { $inc: { balance: lossAmount } });
+            await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: -lossAmount } });
+            await userAccount.findOneAndUpdate({ userId: user.id }, { $inc: { walletbalance: lossAmount } });
 
             await interaction.editReply(`You got caught... you paid **__${lossAmount}__** coins to ${user.username}... you're a criminal!`);
         }

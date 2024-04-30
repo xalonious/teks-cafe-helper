@@ -39,11 +39,10 @@ module.exports = {
 
         if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");
 
-        if (amount > existingUser.balance) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
+        if (amount > existingUser.walletbalance) return interaction.editReply("hey buddy... you only have " + existingUser.balance + " coins... you can't bet more than you have...");
 
         let number = [];
         const spinningIterations = 4; 
-        const totalIterations = spinningIterations * 3; 
 
         let spinningMessage = await interaction.editReply({ content: "Spinning...", embeds: [] });
 
@@ -83,7 +82,7 @@ module.exports = {
             await spinningMessage.edit({ embeds: [slotsEmbed] });
             await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                 $inc: {
-                    balance: amount
+                    walletbalance: amount
                 }
             });
         } else {
@@ -92,7 +91,7 @@ module.exports = {
             await spinningMessage.edit({ embeds: [slotsEmbed] });
             await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                 $inc: {
-                    balance: -amount
+                    walletbalance: -amount
                 }
             });
         }

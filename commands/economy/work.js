@@ -156,7 +156,7 @@ module.exports = {
 
                 const existingUser = await userAccount.findOne({ userId: interaction.user.id });
 
-                existingUser.balance += amount;
+                existingUser.walletbalance += amount;
 
                 await existingUser.save();
 

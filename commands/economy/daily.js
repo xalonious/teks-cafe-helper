@@ -32,7 +32,7 @@ module.exports = {
             return interaction.editReply(`you already claimed your daily coins today, stop being so damn greedy... you can claim them again in **${hoursLeft} hours and ${minutesLeft} minutes**`);
         }
 
-        user.balance += 2500;
+        user.walletbalance += 2500;
         user.hasClaimedDaily = true;
         await user.save();
 
