@@ -3,6 +3,7 @@ const schedule = require("node-schedule");
 
 module.exports = async (client) => {
     const rule = new schedule.RecurrenceRule();
+    rule.tz = 'UTC';
     rule.hour = 0;
     rule.minute = 0;
     rule.second = 0;
