@@ -35,7 +35,7 @@ module.exports = {
             return false;
         }
 
-        if (amount == "all") amount = existingUser.balance;
+        if (amount == "all") amount = existingUser.walletbalancebalance;
 
         amount = parseInt(amount);
         const bet = amount;
