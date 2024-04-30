@@ -21,16 +21,29 @@ module.exports = {
 
         const user = interaction.options.getUser("user");
 
-        if(user.id == interaction.user.id) return interaction.editReply("hey... you can't rob yourself... that's not how it works");
+        if(user.id == interaction.user.id) {
+            interaction.editReply("hey... you can't rob yourself... that's not how it works");
+            return false;
+        }
 
         const existingUser = await userAccount.findOne({ userId: interaction.user.id });
         const targetUser = await userAccount.findOne({ userId: user.id });
 
-        if(!targetUser) return interaction.editReply("hey... they don't have an account yet... tell them to create one using `/createaccount`");
+        if(!targetUser) {
+            interaction.editReply("hey... they don't have an account yet... tell them to create one using `/createaccount`");
+            return false;
+        
+        }
 
-        if(existingUser.walletbalance < 250) return interaction.editReply("hey... you need at least 250 coins to rob someone...");
+        if(existingUser.walletbalance < 250) {
+            interaction.editReply("hey... you need at least 250 coins to rob someone...");
+            return false;
+        }
 
-        if(targetUser.walletbalance < 500) return interaction.editReply("The victim doesn't have at least 500 coins... not worth it man")
+        if(targetUser.walletbalance < 500) {
+            interaction.editReply("hey... they need at least 500 coins for you to rob them...");
+            return false;
+        }
 
         const result = Math.random() < 0.3 ? "success" : "failure";
 
@@ -50,4 +63,6 @@ module.exports = {
 
             await interaction.editReply(`You got caught... you paid **__${lossAmount}__** coins to ${user.username}... you're a criminal!`);
         }
+
+       return true;
     }}

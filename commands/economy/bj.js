@@ -4,6 +4,7 @@ module.exports = {
 	name: "bj",
 	description: "Play a game of blackjack to win some coins",
 	requiresAccount: true,
+	cooldown: 30000,
 	options: [{
 		name: "amount",
 		description: "The amount of money you want to bet",
@@ -19,12 +20,23 @@ module.exports = {
 			userId: interaction.user.id
 		});
 
-		if (isNaN(amount) && amount !== "all") return interaction.editReply("hey... that's not a number... you can't bet that...");
+		if (isNaN(amount) && amount !== "all") {
+			interaction.editReply("hey... that's not a number... you can't bet that...");
+			return false;
+		}
 		if (amount == "all") amount = existingUser.walletbalance;
 
-		if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");
+		if (amount < 250) {
+			interaction.editReply("hey... you can't bet less than 250 coins");
+			return false;
+		
+		}
 
-		if (existingUser.walletbalance < amount) return interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
+		if (existingUser.walletbalance < amount) {
+			interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
+			return false;
+		
+		}
 
 		const playerHand = [];
 		const dealerHand = [];
@@ -66,6 +78,8 @@ module.exports = {
 			updateScore(interaction, bjEmbed, playerHand, dealerHand, false);
 			await interaction.editReply({ embeds: [bjEmbed.setDescription(`it was a tie. no money lost.`)] });
 		}
+
+		return true;
 	}
 }
 

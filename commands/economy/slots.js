@@ -10,6 +10,7 @@ const userAccount = require("../../schemas/userAccount");
 module.exports = {
     name: "slots",
     description: "Play the slot machine",
+    cooldown: 30000,
     requiresAccount: true,
     options: [
         {
@@ -28,7 +29,10 @@ module.exports = {
 
         const existingUser = await userAccount.findOne({ userId: interaction.user.id });
 
-        if (isNaN(amount) && amount !== "all") return interaction.editReply("hey... that's not a number... you can't bet that...");
+        if (isNaN(amount) && amount !== "all") {
+            interaction.editReply("hey... that's not a number... you can't bet that...");
+            return false;
+        }
 
         if (amount == "all") amount = existingUser.balance;
 
@@ -37,9 +41,15 @@ module.exports = {
 
         let win = false;
 
-        if (amount < 250) return interaction.editReply("hey... you can't bet less than 250 coins");
+        if (amount < 250) {
+            interaction.editReply("hey... you can't bet less than 250 coins");
+            return false;
+        }
 
-        if (amount > existingUser.walletbalance) return interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
+        if (amount > existingUser.walletbalance) {
+            interaction.editReply("hey buddy... you only have " + existingUser.walletbalance + " coins... you can't bet more than you have...");
+            return false;
+        }
 
         let number = [];
         const spinningIterations = 4; 
@@ -95,5 +105,7 @@ module.exports = {
                 }
             });
         }
+
+        return true;
     }
 }

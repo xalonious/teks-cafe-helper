@@ -65,10 +65,12 @@ module.exports = async (client, interaction) => {
         return interaction.reply(timeLeftString);
     }
 
-    cooldowns.set(cooldownKey, now + cooldown);
-
     try {
-        await commandObject.run(client, interaction);
+        const wasSuccesful = await commandObject.run(client, interaction);
+
+        if (wasSuccesful) {
+            cooldowns.set(cooldownKey, now + cooldown);
+        }
     } catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {

@@ -148,6 +148,8 @@ module.exports = {
 
                 await userAccount.findOneAndUpdate({ userId: interaction.user.id }, { $inc: { walletbalance: -amount } });
 
+                return true;
+
             }
         }
 }

@@ -162,4 +162,6 @@ module.exports = {
 
                 await interaction.editReply(replies[Math.floor(Math.random() * replies.length)]);
 
+                return true;
+
     }}
