@@ -1,7 +1,7 @@
 const userAccount = require("../../schemas/userAccount");
 const { ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
-	name: "blackjack",
+	name: "bj",
 	description: "Play a game of blackjack to win some coins",
 	requiresAccount: true,
 	options: [{
