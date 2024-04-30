@@ -54,7 +54,7 @@ module.exports = async (client, interaction) => {
             timeLeftString += ` ${seconds} second${seconds > 1 ? "s" : ""}`;
         }
 
-        timeLeftString += " before you can run this command again";
+        timeLeftString += " before you can run this command again\n";
 
         if (reducedCooldown) {
             timeLeftString += " since you're a server booster, cooldowns are cut in half for you!!! thx 4 boosting";
