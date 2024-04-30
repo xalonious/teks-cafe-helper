@@ -70,6 +70,20 @@ module.exports = async (client, interaction) => {
 
         if (wasSuccesful) {
             cooldowns.set(cooldownKey, now + cooldown);
+
+            const user = await userAccount.findOne({ userId: interaction.user.id });
+
+            user.levels.xp += 5;
+
+            if(user.levels.xp >= user.levels.xpneeded) {
+                const newLevel = user.levels.level++;
+                user.levels.xp = 0;
+                user.levels.xpneeded *= 1.1;
+                user.bankcapacity *= 1.4;
+                await interaction.followUp(`Congrats ${interaction.member} You leveled up to level ${newLevel}! Your bankspace has been increased by 40%`);
+            }
+
+            await user.save();
         }
     } catch (error) {
         console.error(error);
