@@ -16,7 +16,7 @@ module.exports = {
             .setColor("Blurple")
             .setDescription(
                 allUsers.map((user, index) => {
-                    return `**${index + 1}.** <@${user.userId}> - <a:tekcoin:1234188584664436778> ${user.balance}`
+                    return `**${index + 1}.** <@${user.userId}> - <a:tekcoin:1234188584664436778> ${user.walletbalance}`
                 }).join("\n")
             )
             .setThumbnail(client.user.displayAvatarURL())

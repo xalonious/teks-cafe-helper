@@ -85,7 +85,7 @@ module.exports = {
                 await interaction.editReply(successfulCrimes[randomIndex]);
             } else {
 
-                amount = Math.floor(existingUser.balance * (Math.random() * 0.10));
+                amount = Math.floor(existingUser.walletbalance * (Math.random() * 0.10));
                 const failedCrimes = [
                     `<a:tekcoin:1234188584664436778> Your attempt to rob the bank ends in disaster as you trip the silent alarm. You narrowly escape, but not before being fined **__${amount}__** coins. Better luck next time.`,
                     `<a:tekcoin:1234188584664436778> You try to break into the museum, but get stuck in the air vent halfway through. You're rescued by the fire department and fined **__${amount}__** coins for your trouble.`,
