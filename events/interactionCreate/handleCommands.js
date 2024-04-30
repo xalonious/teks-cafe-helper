@@ -26,7 +26,7 @@ module.exports = async (client, interaction) => {
     }
 
     const cooldownKey = `${interaction.commandName}-${interaction.user.id}`;
-    const cooldown = commandObject.cooldown || 0;
+    let cooldown = commandObject.cooldown || 0;
     let reducedCooldown = false;
 
     const boosterRole = interaction.member.roles.cache.get("1223323088226222153");
