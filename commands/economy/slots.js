@@ -33,6 +33,7 @@ module.exports = {
         if (amount == "all") amount = existingUser.balance;
 
         amount = parseInt(amount);
+        const bet = amount;
 
         let win = false;
 
@@ -77,7 +78,7 @@ module.exports = {
         }
 
         if (win) {
-            slotsEmbed.setDescription(`${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n<a:tekcoin:1234188584664436778> **You won ${amount} coins!**`);
+            slotsEmbed.setDescription(`${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n<a:tekcoin:1234188584664436778> **You won ${amount - bet} coins!**`);
             slotsEmbed.setColor("Green");
             await spinningMessage.edit({ embeds: [slotsEmbed] });
             await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
