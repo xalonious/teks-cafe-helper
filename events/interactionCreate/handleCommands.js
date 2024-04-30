@@ -27,6 +27,15 @@ module.exports = async (client, interaction) => {
 
     const cooldownKey = `${interaction.commandName}-${interaction.user.id}`;
     const cooldown = commandObject.cooldown || 0;
+    let reducedCooldown = false;
+
+    const boosterRole = interaction.member.roles.cache.get("1223323088226222153");
+    if (boosterRole) {
+        cooldown /= 2;
+        reducedCooldown = true;
+    }
+
+
     const now = Date.now();
     if (cooldowns.has(cooldownKey) && cooldowns.get(cooldownKey) > now) {
         const timeLeft = cooldowns.get(cooldownKey) - now;
@@ -46,6 +55,12 @@ module.exports = async (client, interaction) => {
         }
 
         timeLeftString += " before you can run this command again";
+
+        if (reducedCooldown) {
+            timeLeftString += " since you're a server booster, cooldowns are cut in half for you!!! thx 4 boosting";
+        } else {
+            timeLeftString += " did you know that server boosters get their cooldowns cut in half? boost today";
+        }
 
         return interaction.reply(timeLeftString);
     }
