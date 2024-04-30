@@ -42,10 +42,10 @@ module.exports = {
 		const playerHand = [];
 		const dealerHand = [];
 
-		playerHand.push(dealCard());
-		dealerHand.push(dealCard());
-		playerHand.push(dealCard());
-		dealerHand.push(dealCard());
+		playerHand.push(dealCard(playerHand.concat(dealerHand)));
+		dealerHand.push(dealCard(playerHand.concat(dealerHand)));
+		playerHand.push(dealCard(playerHand.concat(dealerHand)));
+		dealerHand.push(dealCard(playerHand.concat(dealerHand)));
 
 		const bjEmbed = new EmbedBuilder()
 			.setTitle("blackjack")
@@ -113,7 +113,7 @@ async function runRound(playerHand, dealerHand, interaction, bjEmbed) {
 		});
 
 		if (confirmation.customId === 'hit') {
-			playerHand.push(dealCard());
+			playerHand.push(dealCard(playerHand.concat(dealerHand)));
 
 			if (calculateHandScore(playerHand) > 21) {
 				await confirmation.update({ components: [] });
@@ -127,7 +127,7 @@ async function runRound(playerHand, dealerHand, interaction, bjEmbed) {
 			return true;
 		} else if (confirmation.customId === 'stand') {
 			while (calculateHandScore(dealerHand) < 17) {
-				dealerHand.push(dealCard());
+				dealerHand.push(dealCard(playerHand.concat(dealerHand)));
 			}
 			await confirmation.update({ components: [] });
 			await confirmation.deleteReply();
@@ -165,10 +165,11 @@ async function updateScore(interaction, embed, playerHand, dealerHand, hide) {
 	});
 }
 
-function dealCard() {
+function dealCard(usedCards) {
 	const cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-	const randomIndex = Math.floor(Math.random() * cards.length);
-	return cards[randomIndex];
+	const availableCards = cards.filter(card => !usedCards.includes(card));
+	const randomIndex = Math.floor(Math.random() * availableCards.length);
+	return availableCards[randomIndex];
 }
 
 function calculateHandScore(hand) {

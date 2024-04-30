@@ -12,6 +12,22 @@ module.exports = {
             description: "The amount of money you want to bet",
             type: ApplicationCommandOptionType.String,
             required: true
+        },
+        {
+            name: "side",
+            description: "The side of the coin you want to bet on",
+            type: ApplicationCommandOptionType.String,
+            choices: [
+                {
+                    name: "Heads",
+                    value: "heads"
+                },
+                {
+                    name: "Tails",
+                    value: "tails"
+                }
+            ],
+            required: true,
         }
     ],
 
@@ -20,6 +36,7 @@ module.exports = {
                 await interaction.deferReply();
         
                 let amount = interaction.options.getString("amount");
+                const side = interaction.options.getString("side");
 
                 const existingUser = await userAccount.findOne({ userId: interaction.user.id });
 
@@ -42,14 +59,14 @@ module.exports = {
         
                 const result = Math.floor(Math.random() * 2) == 0 ? "heads" : "tails";
         
-                if(result == "heads") {
+                if(result == side) {
                     await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                         $inc: {
                             walletbalance: amount
                         }
                     });
         
-                    await interaction.editReply(`<a:tekcoin:1234188584664436778> You won! The coin landed on heads! You won **__${amount}__** coins!`);
+                    await interaction.editReply(`<a:tekcoin:1234188584664436778> You won! The coin landed on ${result}! You won **__${amount}__** coins!`);
                 } else {
                     await userAccount.findOneAndUpdate({ userId: interaction.user.id }, {
                         $inc: {
@@ -57,7 +74,7 @@ module.exports = {
                         }
                     });
         
-                    await interaction.editReply(`<a:tekcoin:1234188584664436778> You lost! The coin landed on tails! You lost **__${amount}__** coins!`);
+                    await interaction.editReply(`<a:tekcoin:1234188584664436778> You lost! The coin landed on ${result}! You lost **__${amount}__** coins!`);
                 }
     }
 }
