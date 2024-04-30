@@ -1,7 +1,7 @@
 const slotItems = [
-    ":watermelon:", "🍊", ":apple:", ":slot_machine:", ":strawberry:", ":cherries:",
+    ":watermelon:", ":apple:", ":slot_machine:", ":strawberry:", ":cherries:",
     ":lemon:", ":banana:", ":pineapple:", ":peach:", ":pear:", ":kiwi:", ":blueberries:",
-    ":coconut:", ":mango:", ":grapes:", ":melon:", ":tangerine:", ":hot_pepper:", ":peanuts:"
+    ":coconut:", ":mango:", ":grapes:", ":melon:", ":tangerine:", ":hot_pepper:", ":peanuts:", ":corn:"
 ];
 
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
