@@ -17,7 +17,8 @@ module.exports = {
                 level: 1,
                 xp: 0,
                 xpneeded: 100
-            }
+            },
+            inventory: []
         });
 
         await newAccount.save();
