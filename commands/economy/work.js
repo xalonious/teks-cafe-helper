@@ -5,11 +5,11 @@ module.exports = {
     description: "Work to earn some money",
     requiresAccount: true,
     givesxp: true,
-    cooldown: 120000,
+    cooldown: 300000,
 
     run: async(client, interaction) => {
 
-            const amount = Math.floor(Math.random() * 400) + 1;
+            const amount = Math.floor(Math.random() * 800) + 1;
 
 
             const replies = [
