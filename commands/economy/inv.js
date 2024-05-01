@@ -11,7 +11,7 @@ module.exports = {
         const existingUser = await userAccount.findOne({ userId: interaction.user.id });
 
         if (!existingUser.inventory.length) {
-            await interaction.editReply("hey buddy... you don't have anything in your inventory... go buy some shit first");
+            return await interaction.editReply("hey buddy... you don't have anything in your inventory... go buy some shit first");
         }
 
         const inventoryEmbed = new EmbedBuilder()

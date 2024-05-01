@@ -9,7 +9,7 @@ module.exports = [
     {
         name: "Teks security camera",
         description: "The latest tekkinz technology... will keep your wallet safe.. at least for a little bit ig..",
-        price: 5000,
+        price: 7500,
         emoji: "📹",
         inShop: true
     },
