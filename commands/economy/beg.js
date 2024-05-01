@@ -17,7 +17,9 @@ module.exports = {
 
         if(result === "success") {
             const amount = Math.floor(Math.random() * 400) + 1;
-            interaction.editReply(`Oh you poor soul, here's ${amount} coins`);
+            interaction.editReply(`<a:tekcoin:1234188584664436778> Oh you poor soul, here's **__${amount}__** coins`);
+            user.walletbalance += amount;
+            await user.save();
         } else {
             const failedBegResponses = [
                 "nah, would rather not feed your gambling addiction",
