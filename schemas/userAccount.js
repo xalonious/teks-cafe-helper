@@ -33,8 +33,20 @@ const userSchema = new mongoose.Schema({
         },
         xpneeded: {
             type: Number,
-        }
-    }
+        },
+    },
+        inventory: [
+            {
+                itemName: {
+                    type: String,
+                    required: true
+                },
+                quantity: {
+                    type: Number,
+                    default: 0
+                }
+            }
+        ].map(item => ({ ...item, _id: false }))
 })
 
 module.exports = mongoose.model('userAccount', userSchema);
