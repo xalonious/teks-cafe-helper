@@ -7,10 +7,14 @@ module.exports = {
     requiresAccount: true,
 
     run: async (client, interaction) => {
+
+
+        await interaction.deferReply();
+
         const user = await userAccount.findOne({ userId: interaction.user.id });
 
         if (user.hasClaimedDaily) {
-            return interaction.reply(`you already claimed your daily coins today, stop being so damn greedy... you can claim them at midnight UTC`);
+            return interaction.editReply(`you already claimed your daily coins today, stop being so damn greedy... you can claim them at midnight UTC`);
         }
 
         user.walletbalance += 2500;
