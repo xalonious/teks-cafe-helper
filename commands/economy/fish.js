@@ -31,7 +31,7 @@ module.exports = {
                 }
                 userDocument.save();
             }
-            interaction.editReply("STOOPID You dropped your fishing rod... you're gonna have to buy another now...")
+            interaction.editReply("STOOPID!!! You dropped your fishing rod in the water... you're gonna have to buy another now...")
             return true;
         }
 
