@@ -30,7 +30,7 @@ module.exports = [
     },
     {
         name: "Rare Fish",
-        description: "A rare fish... worth more than a regular face...",
+        description: "A rare fish... worth more than a regular fish...",
         sellprice: 1000,
         emoji: "🐠",
         inShop: false
