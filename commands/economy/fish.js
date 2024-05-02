@@ -65,7 +65,7 @@ module.exports = {
             replyString = "You didn't catch anything... better luck next time"
             break;
         case 'Garbage':
-            replyString = "You caught some trash... ew... 🗑️"
+            replyString = "You caught some garbage... ew... 🗑️"
             break;
         case 'Fish':
             replyString = "You caught a fish! 🐟"
