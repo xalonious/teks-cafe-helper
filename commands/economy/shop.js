@@ -14,7 +14,7 @@ module.exports = {
             shopItems
                 .filter((item) => item.inShop === true)
                 .map((item) => {
-                    return `${item.emoji} **${item.name}**\n${item.description} - <a:tekcoin:1234188584664436778> ${item.price}`
+                    return `${item.emoji} **${item.name}**\n${item.description} - <a:tekcoin:1234188584664436778> ${item.buyprice}`
                 })
                 .join("\n\n")
         )
