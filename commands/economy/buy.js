@@ -34,7 +34,7 @@ module.exports = {
             return interaction.editReply("hey... that item doesn't exist in the shop");
         }
 
-        if (existingUser.walletbalance < shopItem.price * quantity) {
+        if (existingUser.walletbalance < shopItem.buyprice * quantity) {
             return interaction.editReply("hey... you don't have enough coins to buy this...");
         }
 
@@ -46,10 +46,10 @@ module.exports = {
             existingUser.inventory.push({ itemName: shopItem.name, quantity: quantity });
         }
 
-        existingUser.walletbalance -= shopItem.price * quantity;
+        existingUser.walletbalance -= shopItem.buyprice * quantity;
 
         await existingUser.save();
 
-        await interaction.editReply(`You have successfully bought ${quantity} ${shopItem.name}(s) for ${shopItem.price * quantity} coins`);
+        await interaction.editReply(`You have successfully bought ${quantity} ${shopItem.name}(s) for ${shopItem.buyprice * quantity} coins`);
     }
 }
