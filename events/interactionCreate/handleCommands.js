@@ -1,11 +1,14 @@
 const devs = ["531479392128598027"];
 const getLocalCommands = require("../../utils/getLocalCommands");
 const userAccount = require("../../schemas/userAccount");
+const { ChannelType } = require("discord.js");
 
 const cooldowns = new Map();
 
 module.exports = async (client, interaction) => {
     if (!interaction.isChatInputCommand()) return;
+
+    if(interaction.channel.type !== ChannelType.GuildText) return interaction.reply("I can only be used in regular text channels, not threads")
 
     const testmode = false;
     if(testmode && interaction.user.id !== "531479392128598027") return interaction.reply("The bot is currently in test mode, pls try again later")
