@@ -37,11 +37,13 @@ module.exports = {
             return await interaction.editReply(replyString);
         }
 
+        const sortedInventory = existingUser.inventory.sort((a, b) => a.itemName.localeCompare(b.itemName));
+
         const inventoryEmbed = new EmbedBuilder()
         .setTitle(`${user.username}'s inventory`)
         .setColor("Blurple")
         .setDescription(
-            existingUser.inventory.map((item) => {
+            sortedInventory.map((item) => {
                 const itemData = items.find(i => i.name === item.itemName);
                 return `${itemData.emoji} **${item.itemName}** - ${item.quantity}`
             }).join("\n")
