@@ -50,7 +50,7 @@ module.exports = {
 		const bjEmbed = new EmbedBuilder()
 			.setTitle("blackjack")
 			.setColor("#FFFFFF")
-			.setThumbnail("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.sevenjackpots.com%2Fwp-content%2Fuploads%2F2021%2F04%2Fblackjack-dealers-up-card-strategy.jpg&f=1&nofb=1&ipt=ea5faa0167d1a998c1cf4b1d32efefa8e6bdbcfc5a2d843bddf3a2d1c93df5e0&ipo=images")
+			.setThumbnail("https://tse1.mm.bing.net/th?id=OIP.g8C90-Qsi8DuaE35Em9hhQHaHa&pid=Api&P=0&h=220")
 			.setDescription(`i love blackjack! you have bet ${amount} coins`);
 
 		await interaction.editReply({ embeds: [bjEmbed] });
