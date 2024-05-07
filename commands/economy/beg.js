@@ -16,7 +16,7 @@ module.exports = {
         const user = await userAccount.findOne({ userId: interaction.user.id });
 
         if(result === "success") {
-            const amount = Math.floor(Math.random() * 400) + 1;
+            const amount = Math.floor(Math.random() * (400 - 100 + 1)) + 100;
             interaction.editReply(`<a:tekcoin:1234188584664436778> Oh you poor soul, here's **__${amount}__** coins`);
             user.walletbalance += amount;
             await user.save();

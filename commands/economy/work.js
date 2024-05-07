@@ -9,7 +9,7 @@ module.exports = {
 
     run: async(client, interaction) => {
 
-            const amount = Math.floor(Math.random() * 800) + 1;
+            const amount = Math.floor(Math.random() * (800 - 150 + 1)) + 150;
 
 
             const replies = [

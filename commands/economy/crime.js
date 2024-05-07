@@ -19,7 +19,7 @@ module.exports = {
 
             if(result == "success") {
 
-                amount = Math.floor(Math.random() * 1500) + 1;
+                amount = Math.floor(Math.random() * (1500 - 250 + 1)) + 250;
                 const successfulCrimes = [
                     `<a:tekcoin:1234188584664436778> You disguise yourself as a pizza delivery person and successfully infiltrate the bank's security. You walk away with a hefty sum of **__${amount}__** coins! The perfect crime.`,
                     `<a:tekcoin:1234188584664436778> You hack into the city's traffic light system and orchestrate the perfect distraction. While chaos ensues on the streets, you calmly rob the jewelry store and make off with **__${amount}__** coins. Smooth.`,
