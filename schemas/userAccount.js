@@ -18,9 +18,15 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 1000,
     },
-    hasClaimedDaily: {
-        type: Boolean,
-        default: false
+    daily: {
+        hasClaimedDaily: {
+            type: Boolean,
+            default: false
+        },
+        streak: {
+            type: Number,
+            default: 1
+        }
     },
     levels: {
         level: {
