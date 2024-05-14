@@ -15,7 +15,7 @@ module.exports = {
                 .filter((item) => item.inShop === true)
                 .sort((a, b) => a.buyprice - b.buyprice)
                 .map((item) => {
-                    return `${item.emoji} **${item.name} - - <a:tekcoin:1234188584664436778> ${item.buyprice}**\n${item.description}`
+                    return `${item.emoji} **${item.name} - <a:tekcoin:1234188584664436778> ${item.buyprice}**\n${item.description}`
                 })
                 .join("\n\n")
         )
