@@ -18,12 +18,12 @@ async function resetDaily() {
     const users = await user.find();
 
     for (const user of users) {
-        if (user.hasClaimedDaily) {
-            user.streak = (user.streak || 0) + 1;
-        } else if (user.streak > 1) {
-            user.streak = 1;
+        if (user.daily.hasClaimedDaily) {
+            user.daily.streak = user.daily.streak + 1;
+        } else if (user.daily.streak > 1) {
+            user.daily.streak = 1;
         }
-        user.hasClaimedDaily = false;
+        user.daily.hasClaimedDaily = false;
         await user.save();
     }
 }
