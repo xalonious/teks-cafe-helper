@@ -22,7 +22,7 @@ module.exports = {
         if (user.daily.streak === 1) {
             dailyAmount = 1000;
         } else {
-            dailyAmount = 1000 * Math.pow(1.2, user.daily.streak - 1);
+            dailyAmount = parseInt(1000 * Math.pow(1.2, user.daily.streak - 1));
         }
 
         user.walletbalance += dailyAmount;
