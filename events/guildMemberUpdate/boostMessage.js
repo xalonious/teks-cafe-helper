@@ -15,6 +15,22 @@ module.exports = async(client, oldMember, newMember) => {
                 .setImage(`https://api.aggelos-007.xyz/boostcard?avatar=${avatarURL}&username=${newMember.user.username}`)
             boostChannel.send({ embeds: [embed] });
         } else if(oldMember.roles.cache.get(boosterRole) && !newMember.roles.cache.get(boosterRole)) {
+            const colorRoles = {
+                "red": "1227412353998524438",
+                "orange": "1227412463582973962",
+                "yellow": "1227412556428345404",
+                "green": "1227412702645715056",
+                "blue": "1227412837316689940",
+                "pink": "1227412933106077798",
+                "purple": "1227413008817455225",
+            }
+            
+            for (const role in colorRoles) {
+                if (newMember.roles.cache.has(colorRoles[role])) {
+                    newMember.roles.remove(colorRoles[role]);
+                }
+            }
+
             let embed = new EmbedBuilder()
                 .setColor('Red')
                 .setTitle("Boost Removed")

@@ -42,6 +42,7 @@ module.exports = async(client) => {
                 memberJoinedEmbed.setFooter({text: `New goal: ${currentTarget + 50}`})
             } else {
                 memberJoinedEmbed.setDescription(`We now have ${currentCount} members! Only ${amountLeft} to go to reach our goal of ${currentTarget}!`)
+                memberJoinedEmbed.setFooter(null)
             }
 
             memberLeftEmbed.setDescription(
