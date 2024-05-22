@@ -2,8 +2,9 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = async(client, oldMember, newMember) => {
     const boostChannel = client.channels.cache.get("1222710473271676948");
+    const boosterRole = newMember.guild.roles.cache.get("1223323088226222153");
 
-    if (!oldMember.premiumSince && newMember.premiumSince) {
+    if (!oldMember.roles.cache.get(boosterRole) && newMember.roles.cache.get(boosterRole)) {
         let avatarURL = newMember.user.displayAvatarURL({ format: 'webp', dynamic: true, size: 1024 });
         avatarURL = avatarURL.replace('.webp', '.png');
             let embed = new EmbedBuilder()
@@ -13,7 +14,7 @@ module.exports = async(client, oldMember, newMember) => {
                 .setThumbnail(newMember.user.displayAvatarURL({ format: "png", dynamic: true }))
                 .setImage(`https://api.aggelos-007.xyz/boostcard?avatar=${avatarURL}&username=${newMember.user.username}`)
             boostChannel.send({ embeds: [embed] });
-        } else if(oldMember.premiumSince && !newMember.premiumSince) {
+        } else if(oldMember.roles.cache.get(boosterRole) && !newMember.roles.cache.get(boosterRole)) {
             let embed = new EmbedBuilder()
                 .setColor('Red')
                 .setTitle("Boost Removed")
