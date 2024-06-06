@@ -27,6 +27,9 @@ module.exports = {
 ],
 
 	run: async (client, interaction) => {
+
+		await interaction.deferReply();
+
 		const title = interaction.options.getString("title")
 		const message = interaction.options.getString("message")
 		const url = "https://www.guilded.gg/api/channels/2a9e12a0-5d45-4cf2-8fe7-778271e4453e/announcements";
@@ -80,20 +83,16 @@ module.exports = {
 			"dontSendNotifications": false
 		};
 
-		axios.post(url, body, {
+		const response = await axios.post(url, body, {
 				headers: headers
 			})
-			.then(response => {
-				console.log('Response:', response.data);
-			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
 
+			if(response.status == 200) {
+				await interaction.editReply("Succesfully shouted!")
+			} else {
+				await interaction.editReply("Failed to post shout, please try again later.")
+				console.log(response.data)
+			}
 
-		await interaction.reply({
-			content: `Successfully shouted ${message}`,
-			ephemeral: true
-		});
 	}
 }
