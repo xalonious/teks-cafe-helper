@@ -1,14 +1,10 @@
-const {
-	ApplicationCommandOptionType,
-	PermissionsBitField
-} = require("discord.js")
+const { ApplicationCommandOptionType, PermissionsBitField } = require("discord.js")
 const axios = require("axios");
 require("dotenv").config();
 
 module.exports = {
 	name: "shout",
 	description: "shouts a message to the roblox group AND discord",
-	permissionsRequired: [PermissionsBitField.Flags.ManageMessages],
 	options: [
 	{
 		name: "title",
@@ -29,6 +25,13 @@ module.exports = {
 	run: async (client, interaction) => {
 
 		await interaction.deferReply();
+
+
+		const staffRoles = ["1227031971016867982", "1227285303316713643"];
+
+		const canShout = interaction.member.roles.cache.some(role => staffRoles.includes(role.id));
+		
+		if(!canShout) return interaction.editReply("Only MR+ staff can post group shouts");
 
 		const title = interaction.options.getString("title")
 		const message = interaction.options.getString("message")
