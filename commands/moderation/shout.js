@@ -91,7 +91,7 @@ module.exports = {
 			})
 
 			if(response.status == 200) {
-				await interaction.editReply("Succesfully shouted!")
+				await interaction.editReply("Successfully shouted!")
 			} else {
 				await interaction.editReply("Failed to post shout, please try again later.")
 				console.log(response.data)
