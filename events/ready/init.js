@@ -1,10 +1,10 @@
 const { ActivityType } = require("discord.js");
 const mongoose = require("mongoose");
-require("dotenv").configt();
+require("dotenv").config();
 
 module.exports = async (client) => {
     console.log(`✅  | ${client.user.tag}`)
-    
+
     client.user.setPresence({
         activities: [{ name: "teks cafe", type: ActivityType.Watching }],
       });
