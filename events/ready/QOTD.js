@@ -15,7 +15,7 @@ module.exports = async(client) => {
 
     schedule.scheduleJob(rule, async() => {
         const qotd = await getQOTD();
-        qotdChannel.send(`**QOTD: ${qotd}**`);
+        qotdChannel.send(`**:tek_logo: | NEW ACTIVITY!** \n\n Greetings, <@&1227663262796218368>. For today's activity feel free to answer the following question in <#1042849970333679720> ; \n\n - __${qotd}__ \n\n teks cafe helper, \n Best bot in the world`);
 
     })
 
