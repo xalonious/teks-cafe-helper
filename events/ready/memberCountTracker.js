@@ -41,7 +41,7 @@ module.exports = async(client) => {
                 }
 
                 if (currentCount >= currentTarget) {
-                    let newGoal = currentTarget + 50;
+                    let newGoal = currentTarget + 100;
                     jsonData.goal = newGoal;
                     const updatedGoalData = JSON.stringify(jsonData, null, 2);
 
