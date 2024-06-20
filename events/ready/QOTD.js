@@ -42,20 +42,3 @@ module.exports = async(client) => {
 
 }
 
-
-
-async function getQOTD() {
-    await axios.post('https://api.anthropic.com/v1/messages', {
-    model: 'claude-3-opus-20240229',
-    max_tokens: 1024,
-    messages: [
-        { role: 'user', content: 'hi there, I want you to ask me a question of the day. Say nothing but the question. Make it silly.' }
-    ]
-}, {
-    headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'Content-Type': 'application/json'
-    }
-})
-}
