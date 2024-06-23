@@ -1,7 +1,6 @@
 const schedule = require("node-schedule");
 const axios = require("axios");
 require('dotenv').config();
-const crypto = require("crypto");
 
 module.exports = async(client) => {
 
@@ -15,30 +14,30 @@ module.exports = async(client) => {
 
     schedule.scheduleJob(rule, async() => {
         const qotd = await getQOTD();
-        qotdChannel.send(`**<:tek_logo:1245109274070487141> | NEW ACTIVITY!** \n\n Greetings, <@&1227663262796218368>. For today's activity feel free to answer the following question in <#1042849970333679720> ; \n\n - __${qotd}__ \n\n teks cafe helper, \n Best bot in the world`);
-
-    })
-
-
+        const formattedQOTD = formatQOTD(qotd);
+        qotdChannel.send(`**<:tek_logo:1245109274070487141> | NEW ACTIVITY!** \n\n Greetings, <@&1227663262796218368>. For today's activity feel free to answer the following question in <#1042849970333679720> ; \n\n - __${formattedQOTD}__ \n\n teks cafe helper, \n Best bot in the world`);
+    });
 
     async function getQOTD() {
-        const uniqueId = crypto.randomBytes(16).toString("hex");
-        const qotd = await axios.post('https://api.anthropic.com/v1/messages', {
-            model: 'claude-3-opus-20240229',
-            max_tokens: 1024,
-            messages: [
-                { role: 'user', content: `hi there, I want you to ask me a question of the day. Say nothing but the question. Here is a unique id to ensure that all responses are unique, pay no attention to it: ${uniqueId}` }
-            ]
-        }, {
-            headers: {
-                'x-api-key': process.env.QOTD_API_KEY,
-                'anthropic-version': '2023-06-01',
-                'Content-Type': 'application/json'
-            }
+        const response = await axios.get('https://opentdb.com/api.php?amount=1&type=multiple');
+        const question = response.data.results[0];
+        const options = shuffleOptions([question.correct_answer, ...question.incorrect_answers]);
+        const formattedOptions = options.map((option, index) => {
+            return `**${String.fromCharCode(65 + index)}. ${option}**`;
         });
-        return qotd.data.content[0].text;
+        return { question: question.question, options: formattedOptions };
     }
 
+    function formatQOTD(qotd) {
+        return `${qotd.question}\n\n${qotd.options.join('\n')}`;
+    }
+
+    function shuffleOptions(options) {
+        for (let i = options.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [options[i], options[j]] = [options[j], options[i]];
+        }
+        return options;
+    }
 
 }
-
