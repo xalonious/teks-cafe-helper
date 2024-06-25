@@ -1,5 +1,6 @@
 const schedule = require("node-schedule");
 const axios = require("axios");
+const he = require("he");
 require('dotenv').config();
 
 module.exports = async(client) => {
@@ -23,9 +24,9 @@ module.exports = async(client) => {
         const question = response.data.results[0];
         const options = shuffleOptions([question.correct_answer, ...question.incorrect_answers]);
         const formattedOptions = options.map((option, index) => {
-            return `**${String.fromCharCode(65 + index)}. ${option}**`;
+            return `**${String.fromCharCode(65 + index)}. ${he.decode(option)}**`;
         });
-        return { question: question.question, options: formattedOptions };
+        return { question: he.decode(question.question), options: formattedOptions };
     }
 
     function formatQOTD(qotd) {
